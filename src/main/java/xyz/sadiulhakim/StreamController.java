@@ -18,18 +18,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-/**
- * | Feature                      | StreamingResponseBody                             | SseEmitter                                      | ResponseBodyEmitter                             | InputStreamResource                               |
- * |------------------------------|--------------------------------------------------|------------------------------------------------|------------------------------------------------|--------------------------------------------------|
- * | **Purpose**                  | Stream data incrementally to the client          | Send Server-Sent Events (SSE) to clients      | Stream data to the client with support for async| Stream files or resources directly to the client  |
- * | **Use Cases**                | Large datasets, long-running processes            | Real-time updates, notifications                | Long-running processes, dynamic content         | Large files, dynamic content, file downloads      |
- * | **Memory Efficiency**        | Yes, does not load entire response into memory    | Yes, allows for incremental data without buffering| Yes, can handle large datasets without buffering | Yes, streams directly from an InputStream         |
- * | **Connection Handling**      | Non-blocking, allows other requests to be handled | Long-lived connections for real-time updates    | Can be asynchronous and allows for chunked data | Managed by Spring, auto-closed after response     |
- * | **Client Support**           | Any HTTP client that can handle streaming         | Browsers supporting SSE                          | Any HTTP client that can handle chunked responses| Any HTTP client                                   |
- * | **Typical Use in Web Apps**  | Sending large CSV/JSON files, data processing    | Live notifications (e.g., chat apps)           | Generating reports, sending logs                | File downloads, serving media                     |
- * | **Complexity**               | Simple to implement                               | Requires client-side handling of SSE            | More complex due to manual flushing              | Simple to implement                               |
- */
-
 @RestController
 public class StreamController {
     private final ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor();
