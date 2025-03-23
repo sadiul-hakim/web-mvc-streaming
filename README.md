@@ -40,3 +40,20 @@
 | **Complexity**               | Slightly more complex due to streaming logic      | Simpler to implement for file serving             |
 | **Flushing Behavior**        | Flushes data in chunks while writing              | Data is sent in one go once the resource is read  |
 | **Typical Use in Web Apps**  | Sending large CSV/JSON files, data processing     | Serving images, PDFs, or other static files      |
+
+| Feature         | `ResponseBodyEmitter` | `SseEmitter` |
+|---------------|-------------------|-------------|
+| **Use Case** | General-purpose response streaming (e.g., JSON, plain text) | Server-Sent Events (SSE) specifically |
+| **Content Type** | Not restricted, default is `application/octet-stream` | Automatically sets `text/event-stream` |
+| **Event Formatting** | Sends raw data as-is | Formats messages in SSE format (`data: <message>\n\n`) |
+| **Client Compatibility** | Requires custom client handling | Works natively with `EventSource` in JavaScript |
+| **Connection Handling** | Standard HTTP response | SSE-specific features like reconnection support |
+
+| Feature                 | `StreamingResponseBody` | `ResponseBodyEmitter` | `InputStreamResource` |
+|-------------------------|------------------------|-----------------------|-----------------------|
+| **Use Case**           | Large binary/text streaming | Asynchronous response streaming | Serving large files or input streams |
+| **Streaming Mechanism** | Uses OutputStream for efficient byte streaming | Allows sending multiple async chunks | Wraps an InputStream for direct response |
+| **Memory Efficiency**   | Very efficient, writes directly to OutputStream | Efficient but buffers chunks in memory | Efficient for file-based responses |
+| **Client Compatibility** | Works well with large JSON responses | Good for real-time event-based streaming | Best for file downloads, may not be ideal for JSON |
+| **Best For 100MB JSON?** | ✅ Yes, best choice | ❌ No, not optimal for large JSON | ❌ No, better for static files |
+
