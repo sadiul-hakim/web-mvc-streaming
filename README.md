@@ -57,3 +57,7 @@
 | **Client Compatibility** | Works well with large JSON responses | Good for real-time event-based streaming | Best for file downloads, may not be ideal for JSON |
 | **Best For 100MB JSON?** | ✅ Yes, best choice | ❌ No, not optimal for large JSON | ❌ No, better for static files |
 
+# So, i would nornally use 
+1. SseEmitter for Server Sent event -> Unidirectional asynchronous real time server response 
+2. StreamingResponseBody -> Streaming huge response
+3. InputStreamResource -> Streaming huge response file
